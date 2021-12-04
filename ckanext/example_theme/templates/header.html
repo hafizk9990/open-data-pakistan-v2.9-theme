@@ -1,0 +1,130 @@
+<script>
+    window.onload = function(e){
+        let ID = window.location.pathname.substr(1)
+        if(ID){
+            let elem = document.getElementById(ID)
+            if (elem){
+                elem.className = "options-underline option-activated hidden-xs";
+            }
+        }
+    }
+</script>
+{% block header_wrapper %} {% block header_account %}
+<header class="account-masthead">
+  <div class="container">
+    {% block header_account_container_content %} {% if c.userobj %}
+    <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
+      <ul class="list-unstyled">
+        {% block header_account_logged %} {% if c.userobj.sysadmin %}
+        <li>
+          <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}">
+            <i class="fa fa-gavel" aria-hidden="true"></i>
+            <span class="text">{{ _('Admin') }}</span>
+          </a>
+        </li>
+        {% endif %}
+        <li>
+          <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                  {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
+                  <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+        </li>
+        {% set new_activities = h.new_activities() %}
+        <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
+          {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities)
+          %}
+          <a href="{{ h.url_for('dashboard.index') }}" title="{{ notifications_tooltip }}">
+            <i class="fa fa-tachometer" aria-hidden="true"></i>
+            <span class="text">{{ _('Dashboard') }}</span>
+            <span class="badge">{{ new_activities }}</span>
+          </a>
+        </li>
+        {% block header_account_settings_link %}
+        <li>
+          <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit settings') }}">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            <span class="text">{{ _('Settings') }}</span>
+          </a>
+        </li>
+        {% endblock %} {% block header_account_log_out_link %}
+        <li>
+          <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <span class="text">{{ _('Log out') }}</span>
+          </a>
+        </li>
+        {% endblock %} {% endblock %}
+      </ul>
+    </div>
+    {% else %}
+    <nav class="account not-authed">
+      <ul class="list-unstyled">
+        {% block header_account_notlogged %}
+        <li>{% link_for _('Log in'), named_route='user.login' %}</li>
+        {% if h.check_access('user_create') %}
+        <li>{% link_for _('Register'), named_route='user.register', class_='sub' %}</li>
+        {% endif %} {% endblock %}
+      </ul>
+    </nav>
+    {% endif %} {% endblock %}
+  </div>
+</header>
+{% endblock %}
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand navbar-image" href="/"><img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}"></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-button"><a href="/dataset">Data <span class="sr-only">(current)</span></a>
+                        <hr id="dataset" class="options-underline hidden-xs" align="center"/>
+                    </li>
+                    <li class="nav-button"><a href="/organization">Organizations</a>
+                        <hr id="organization" class="options-underline hidden-xs" align="center"/>
+                    </li>
+                    <li class="nav-button"><a href="/showcase">Showcase</a>
+                        <hr id="showcase" class="options-underline hidden-xs" align="center"/>
+                    </li>
+                    <li class="nav-button"><a href="/blog">Blog</a>
+                        <hr id="blog" class="options-underline hidden-xs" align="center"/>
+                    </li>
+                    <li class="nav-button"><a href="/contact">Connect</a>
+                        <hr id="contact" class="options-underline hidden-xs" align="center"/>
+                    </li>
+          
+          
+                    <li class="nav-button dropdown">
+                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Events<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/pages/covid19">COVID19 Hackathon</a></li>
+                        <li><a href="/pages/datathon-pakistan-data-weekend">Datathon</a></li>
+			<li><a href="/pages/data-viz-challenge">DATA VIZ Challenge</a></li>
+                    </ul>
+                    <hr id="about" class="options-underline hidden-xs" align="center"/>
+                    </li>
+          
+          
+                    <li class="nav-button dropdown">
+                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/pages/guidelines">Guidelines</a></li>
+                    </ul>
+                    <hr id="about" class="options-underline hidden-xs" align="center"/>
+                    </li>
+          
+          
+                </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+{% endblock %}
