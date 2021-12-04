@@ -5,7 +5,7 @@ class ExampleThemePlugin(plugins.SingletonPlugin):
     '''An example theme plugin.
 
     '''
-    pass
+    plugins.implements(plugins.IConfigurer)
 
     def update_config(self, config):
         # Adding this line overrides CKAN's default templates (.html jinja template files)
