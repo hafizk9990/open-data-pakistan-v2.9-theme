@@ -1,0 +1,23 @@
+{#
+Display a grid of organization items.
+
+organizations - A list of organizations.
+
+Example:
+
+    {% snippet "organization/snippets/organization_list.html" %}
+
+#}
+{% block organization_list %}
+<ul class="list-unstyled">
+  {% block organization_list_inner %}
+  {% for organization in organizations %}
+  {% set url = h.url_for(organization.type ~ '_read', action='read', id=organization.name) %}
+    <li>   
+      <h4 class="dataset-heading"><a href="{{ url }}"> {{organization.display_name}}  </a></h4> 
+    </li>
+    <hr>
+  {% endfor %}
+   {% endblock %}
+</ul>
+{% endblock %}

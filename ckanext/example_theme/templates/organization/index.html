@@ -1,0 +1,56 @@
+{% extends "page_primary.html" %}
+
+{% block subtitle %}{{ _('Organizations') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Organizations'), controller='organization', action='index', named_route=group_type + '_index' %}</li>
+{% endblock %}
+
+{% block page_header %}{% endblock %}
+
+{% block page_primary_action %}
+  {% if h.check_access('organization_create') %}
+    {% link_for _('Add Organization'), controller='organization', action='new', class_='btn btn-primary', icon='plus-square', named_route=group_type + '_new' %}
+  {% else %}
+      <div style="display: flex;
+align-content: space-around;
+justify-content: space-between;">
+      <div >
+        <h4> Please register your organization to add datasets. </h4>
+      </div>
+      <div>
+        <a style="margin-bottom :15px" class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScw8OGeR6ZbUGcxjJ-nl9JQpXmHuUu0e52P0cqlKQKy9Ty_vg/viewform" class="contact" target="_blank">
+            <i class="fa fa-sitemap"></i>
+            {{ _('Register Your Organization') }}
+        </a>
+      </div>
+      </div>
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h1 class="hide-heading">{% block page_heading %}{{ _('Organizations') }}{% endblock %}</h1>
+  {% block organizations_search_form %}
+    {% snippet 'snippets/search_form.html', form_id='organization-search-form', type='organization', query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, placeholder=_('Search organizations...'), show_empty=request.params, no_bottom_border=true if c.page.items, sorting = [(_('Name Ascending'), 'title asc'), (_('Name Descending'), 'title desc')] %}
+  {% endblock %}
+  {% block organizations_list %}
+    {% if c.page.items or request.params %}
+      {% if c.page.items %}
+        {% snippet "organization/snippets/organization_list_custom.html", organizations=c.page.items %}
+      {% endif %}
+    {% else %}
+      <p class="empty">
+        {{ _('There are currently no organizations for this site') }}.
+        {% if h.check_access('organization_create') %}
+          {% link_for _('How about creating one?'), controller='organization', action='new' %}</a>.
+        {% endif %}
+      </p>
+    {% endif %}
+  {% endblock %}
+  {% block page_pagination %}
+    {{ c.page.pager(q=c.q or '', sort=c.sort_by_selected or '') }}
+  {% endblock %}
+{% endblock %}
+
+{% block secondary_content %}
+{% endblock %}
