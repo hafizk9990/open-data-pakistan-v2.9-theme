@@ -18,7 +18,7 @@
 
   {# The content block allows you to replace the content of the page if needed #}
   {%- block content %}
-    {% block maintag %}<div role="main">{% endblock %}
+    {% block maintag %}<div role="main" style = "background-color: #e8e8e8; padding-top: 15px;">{% endblock %}
       <div id="content" class="container">
         {% block main_content %}
           {% block flash %}
@@ -85,6 +85,7 @@
                     <p>Some content for the page</p>
                   {% endblock %}
                 #}
+                
                 {% block primary_content %}
                   <article class="module">
                     {% block page_header %}
@@ -93,10 +94,10 @@
                           <div class="content_action">
                             {% block content_action %}{% endblock %}
                           </div>
-                        {% endif %}
-                        <ul class="nav nav-tabs">
-                          {% block content_primary_nav %}{% endblock %}
-                        </ul>
+                        {% endif %}<ul class="nav nav-tabs">
+                            {% block content_primary_nav %}{% endblock %}
+                          </ul>
+                        
                       </header>
                     {% endblock %}
                     <div class="module-content">
