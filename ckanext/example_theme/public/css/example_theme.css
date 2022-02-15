@@ -173,6 +173,11 @@ html {
   border-top: 1px solid var(--color-1) !important;
   margin-top: 3px;
 }
+#blogs-card-background {
+  /* for some reason, this doesn't work with class. So, had to add as an ID*/
+  padding-bottom: 22px;
+  background-color: #f0f0f0;
+}
 .main-heading {
   font-size: 35pt;
   font-weight: bold;
@@ -344,9 +349,20 @@ html {
 .secondary {
   border: 1px solid #96969640;
 }
-
+.row-fluid > .col-sm-3 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+/* .col-sm-3 > .module-heading {
+    padding-top: 100px !important;
+    padding-bottom: 100px !important;
+} */
 .fa.fa-search {
   color: var(--color-1);
+}
+
+.module-heading {
+  font-size: 20px !important;
 }
 
 /* .nav-facet .nav-item.active > a::after{
@@ -398,6 +414,9 @@ html {
 .blog-content > p {
   height: 5.8em !important;
   overflow: hidden !important;
+}
+.blog-social-icons a:hover {
+  text-decoration: none;
 }
 .categories-container {
   display: flex;
@@ -522,12 +541,13 @@ a.tag:hover {
   opacity: 0.8;
 }
 .page-header .nav-tabs li.active a {
-  background: var(--color-2);
-  color: white;
+  /* background: var(--color-2); */
+  color: #00a1ac;
 }
 
 .page-header .nav-tabs li a {
-  color: var(--color-2);
+  /* color: var(--color-2); */
+  color: black;
 }
 .timeline-Header-title {
   font-size: 20pt !important;
@@ -698,4 +718,7 @@ a.tag:hover {
   padding: 0.5vw;
   font-size: 2vw;
   font-family: inherit;
+}
+#edit-button a:hover {
+  text-decoration: none;
 }
