@@ -196,24 +196,14 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a class="homepage-footer-stats" href="{{ h.url_for(controller='home', action='index') }}">
+                    <a class="homepage-footer-stats">
                     <h3 class="homepage-count"> {{ foot['categories'] }} <img src="/images/categories.png"/></h3>
                      <h2 class="homepage-count-description"> Categories </h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a class="homepage-footer-stats" href="{{ h.url_for('dataset') }}">
-                      <h3 class="homepage-count"> ?  <img src="/images/application.png"/></h3> {# ERROR STARTS HERE  {{ h.SI_number_span(stats.showcase_count) }} #} 
-                      
-                        {#
-                            *** ERROR EXPLANATION ***
-                            
-                            GIVEN THAT WE DO NOT HAVE ANY PAGES / SHOWCASE EXTENSION INSTALLED, 
-                            THERE IS SO FAR NO showcase_count IN OUR DICTIONARY. SO, THIS ERROR
-                            CAN ONLY BE RESOLVED AFTER WE IMPLEMENT SHOWCASE
-                        #}
-                      
-                      
+                    <a class="homepage-footer-stats" href="{{ h.url_for('showcase') }}">
+                      <h3 class="homepage-count"> {{ h.SI_number_span(stats.showcase_count) }}  <img src="/images/application.png"/></h3>
                         <h2 class="homepage-count-description"> Showcases </h2>
                     </a>
                 </div>
