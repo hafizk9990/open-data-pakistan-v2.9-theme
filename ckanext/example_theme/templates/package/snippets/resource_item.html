@@ -1,0 +1,66 @@
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
+
+<li class="resource-item" data-id="{{ res.id }}">
+  <div class="resource-preview">
+    <div class= "resource-description"">
+        {% block resource_item_title %}
+        <strong>
+        <a class="hidden-sm hidden-xs heading" href="{{ url }}" title="{{ res.name or res.description }}">
+            <span class="ds-format format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">
+            {{ h.get_translated(res, 'format') }}
+            </span>
+            {{ h.resource_display_name(res) | truncate(50) }}
+            {{ h.popular('views', res.tracking_summary.total, min=10) }}
+        </a>
+        <a onclick="alert('Visualization is disabled for small screen sizes')" class="heading hidden-lg hidden-md" disabled title="{{ res.name or res.description }}">
+            <span class="ds-format format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">
+            {{ h.get_translated(res, 'format') }}
+            </span>
+            {{ h.resource_display_name(res) | truncate(50) }}
+            {{ h.popular('views', res.tracking_summary.total, min=10) }}
+        </a>
+        </strong>
+        {% endblock %}
+        {% block resource_item_description %}
+            <p class="description">
+            {% if res.description %}
+                {{ h.markdown_extract(h.get_translated(res, 'description'), extract_length=80) }}
+            {% endif %}
+            </p>
+        {% endblock %}
+    </div>
+    <div class="resource-actions">
+        {% block resource_item_explore %}
+        {% if not url_is_edit %}
+                {% if res.url and h.is_url(res.url) %}
+                    <a class="btn btn-primary resource-actions-option" href="{{ res.url }}" class="resource-url-analytics" target="_blank">
+                    {% if res.has_views or res.url_type == 'upload' %}
+                        <i class="fa fa-arrow-circle-o-down"></i>
+                        {{ _('Download') }}
+                    {% else %}
+                        <i class="fa fa-external-link"></i>
+                        {{ _('Go to resource') }}
+                    {% endif %}
+                    </a>
+                {% endif %}
+                {% if can_edit %}
+                    <a class="btn btn-primary resource-actions-option" href="{{ h.url_for(controller='package', action='resource_edit', id=pkg.name, resource_id=res.id) }}">
+                    <i class="fa fa-pencil-square-o"></i>
+                    {{ _('Edit') }}
+                    </a>
+                {% endif %}
+                <a class="btn btn-primary hidden-sm hidden-xs resource-actions-option" href="{{ url }}">
+                {% if res.has_views %}
+                    <i class="fa fa-bar-chart-o"></i>
+                    {{ _('Preview') }}
+                {% else %}
+                    <i class="fa fa-info-circle"></i>
+                    {{ _('More information') }}
+                {% endif %}
+                </a>
+        {% endif %}
+        {% endblock %}
+    </div>
+  </div>
+</li>
