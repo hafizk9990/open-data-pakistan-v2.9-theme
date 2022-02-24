@@ -45,7 +45,7 @@
             </div>
           {% endblock %}
 
-          <div class="row-fluid wrapper{% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
+          <div style = "background-color: red;" class="row-fluid wrapper{% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
             {#
             The pre_primary block can be used to add content to before the
             rendering of the main content columns of the page.
@@ -72,7 +72,7 @@
             {% endblock %}
 
             {% block primary %}
-              <div class="primary col-sm-12 col-xs-12">
+              <div class="primary col-sm-12 col-xs-12" style = "background-color: red;">
                   <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
                 {#
                 The primary_content block can be used to add content to the page.
